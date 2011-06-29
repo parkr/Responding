@@ -14,6 +14,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Insert code here to initialize your application 
+	NSSize minSize;
+	minSize.width = 900;
+	minSize.height = 563;
+	[window setMinSize:minSize];
 }
 
 @end
