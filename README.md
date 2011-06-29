@@ -18,9 +18,21 @@ With version 1.1, you can now keep track of message-response pairs to different 
 
 It's a problem that's in my to-do list. For now, you can use `Enter` (`Opt-Return`).
 
+### How do I add a new recipient?
+
+Click on the pop-up button next to "Names". Select "New...", enter the new name and begin! Remember to save!
+
+### My question isn't here and I need help!
+
+No problemo. [Email me](mailto:responding@parkermoore.de) and I'll get back to you asap.
+
 ## Screenshots
 
+### The application window: 
+
 ![What it looks like.](http://parkermoore.de/projects/RespondingApp/images/screenshot.png)
+
+### Selecting a new recipient:
 
 ![Selecting a new Recipient](http://parkermoore.de/projects/RespondingApp/images/selecting_new_person.png)
 
