@@ -20,4 +20,8 @@
 	[window setMinSize:minSize];
 }
 
+- (IBAction)openHelpPage:(id)sender{
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.parkermoore.de/projects/RespondingApp/"]];
+}
+
 @end

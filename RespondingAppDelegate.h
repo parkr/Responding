@@ -14,4 +14,6 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
+- (IBAction)openHelpPage:(id)sender;
+
 @end

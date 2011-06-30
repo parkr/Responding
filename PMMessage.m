@@ -14,7 +14,6 @@
 - (id)init {
 	[super init];
 	indexOfCurrentPerson = -1;
-	[self loadPeopleFromFile];
 	NSLog(@"%@", peopleArray);
 	NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 	NSString *folderPath = [[libPath stringByAppendingPathComponent:@"Application Support"] stringByAppendingPathComponent:@"Responding"];
@@ -29,6 +28,7 @@
 					   @"Helvetica", @"font", 16.0, @"fontSize", [[NSArray alloc] init], @"recipients", nil];
 		[preferences writeToFile:preferencesFile atomically:YES];
 	}
+	[self loadPeopleFromFile];
 	return self;
 }
 
@@ -47,8 +47,9 @@
 }
 
 - (void)awakeFromNib {
-	NSLog(@"Awoken!");
+	NSLog(@"Awoken! %@", peopleArray);
 	[people addItemsWithTitles:peopleArray];
+	NSLog(@"People added.");
 	if (indexOfCurrentPerson >= 0) {
 		[self loadMessagesFromFiles];
 		[self enableInterface];
@@ -76,13 +77,14 @@
 			[status setStringValue:PMSavedText];
 		}
 	}else {
+		[self savePrefsToFile];
 		[status setStringValue:PMErrorSavingFiles(@"no recipient chosen.")];
 	}
 
 }
 
 - (BOOL)savePrefsToFile {
-	NSLog(@"%@", preferencesFile);
+	NSLog(@"Preferences saved to %@", preferencesFile);
 	return [preferences writeToFile:preferencesFile atomically:YES];
 }
 
@@ -120,7 +122,6 @@
 	NSLog(@"Font set to %@ at size %f", currentFontName, currentFontSize);
 	[preferences setObject:[NSString stringWithFormat:@"%f", currentFontSize] forKey:@"fontSize"];
 	[preferences setObject:[NSString stringWithFormat:@"%@", currentFontName] forKey:@"font"];
-	NSLog(@"%@", preferences);
 }
 
 - (IBAction)enlargeFont:(id)sender{
@@ -181,71 +182,19 @@
 }
 
 - (void)loadPeopleFromFile {
-	NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-	NSString *folderPath = [[libPath stringByAppendingPathComponent:@"Application Support"] stringByAppendingPathComponent:@"Responding"];
-	peopleFile = [folderPath stringByAppendingPathComponent:@"people.plist"];
-	[peopleFile retain];
-	BOOL yah = YES;
-	if([[NSFileManager defaultManager] fileExistsAtPath:folderPath isDirectory:&yah]){
-		// Is the file there?
-		if ([[NSFileManager defaultManager] fileExistsAtPath:peopleFile]) {
-			// They sure do! Great. Load 'em!
-			peopleArray = [[NSMutableArray alloc] initWithContentsOfFile:peopleFile];
-		}else{
-			// Guess it isn't. Gah!
-			peopleArray = [[NSMutableArray alloc] init];
-			// Are there left-over message and response files from before?
-			messageFile = [folderPath stringByAppendingPathComponent:@"message.txt"];
-			responseFile = [folderPath stringByAppendingPathComponent:@"response.txt"];
-			if ([[NSFileManager defaultManager] fileExistsAtPath:messageFile] && [[NSFileManager defaultManager] fileExistsAtPath:responseFile]) {
-				// They're there! Recover them. But first: ask for a name!
-				NSTextField *accessory = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,200,20)];
-				NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-				NSDictionary *textAttributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
-				[accessory insertText:[[NSAttributedString alloc] initWithString:@"Who was it for?" attributes:textAttributes]];
-				[accessory setEditable:YES];
-				[accessory setDrawsBackground:NO];
-				
-				NSAlert *chooseAPerson = [[NSAlert alloc] init];
-				[chooseAPerson setAlertStyle:NSInformationalAlertStyle];
-				[chooseAPerson setMessageText:PMNoPeopleFoundText];
-				[chooseAPerson setInformativeText:PMResponseFoundButNoPeopleText];
-				[chooseAPerson setAccessoryView:accessory];
-				[chooseAPerson runModal];
-				// GET THAT RESPONSE!!!
-				NSString *person = [accessory stringValue];
-				[peopleArray addObject:person];
-				indexOfCurrentPerson = 0;
-				NSLog(@"Person was: %@", person);
-				// Move files!
-				NSString *newPath = [[messageFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:PMMessageTo(PMCurrentPerson)];
-				[[NSFileManager defaultManager] moveItemAtPath:messageFile toPath:newPath error:nil];
-				newPath = [[responseFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:PMResponseTo(PMCurrentPerson)];
-				[[NSFileManager defaultManager] moveItemAtPath:responseFile toPath:newPath error:nil];
-				[chooseAPerson release];
-			}else {
-				// Bummer. Must be a fresh install or something.
-				NSAlert *chooseAPerson = [[NSAlert alloc] init];
-				[chooseAPerson setAlertStyle:NSInformationalAlertStyle];
-				[chooseAPerson setMessageText:PMNoPeopleFoundText];
-				[chooseAPerson setInformativeText:PMNoPeopleFoundText];
-				[chooseAPerson runModal];
-				[chooseAPerson release];
-			}
-		}
+	if (preferences != NULL) {
+		peopleArray = [[preferences objectForKey:@"recipients"] mutableCopy];
 	}else{
-		// Nothing exists.
-		if(![[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:NULL]){
-			NSLog(@"Error: Create folder failed %@", folderPath);
-			peopleArray = [[NSMutableArray alloc] init];
-			[status setStringValue:@"Could not create folder. Please quit and relaunch the program."];
-		}else {
-			// Create files.
-			peopleArray = [[NSMutableArray alloc] init];
-			[status setStringValue:PMConcatenateToString([status stringValue], PMInitializedWithNewText)];
-		}
+		// Bummer. Must be a fresh install or something.
+		NSAlert *chooseAPerson = [[NSAlert alloc] init];
+		[chooseAPerson setAlertStyle:NSInformationalAlertStyle];
+		[chooseAPerson setMessageText:PMNoPeopleFoundText];
+		[chooseAPerson setInformativeText:PMNoPeopleFoundText];
+		[chooseAPerson runModal];
+		[chooseAPerson release];
+		peopleArray = [[NSMutableArray alloc] init];
+		[status setStringValue:PMConcatenateToString([status stringValue], PMInitializedWithNewText)];
 	}
-	
 }
 
 - (void)loadMessagesFromFiles {
