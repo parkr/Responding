@@ -32,6 +32,13 @@
 #define PMMessageTo(name) [[NSString alloc] initWithFormat:@"message_to_%@.txt", name]
 #define PMResponseTo(name) [[NSString alloc] initWithFormat:@"response_to_%@.txt", name]
 
+#define PMKeyPeople @"recipients"
+#define PMKeyFontName @"font"
+#define PMKeyFontSize @"fontSize"
+
+#define PMTextFieldHeight 622
+#define PMTextFieldWidth 552
+
 @interface PMMessage : NSObject {
 	IBOutlet NSTextField *message;
 	IBOutlet NSTextField *response;

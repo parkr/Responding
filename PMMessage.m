@@ -25,10 +25,11 @@
 		NSLog(@"%@", preferences);
 	}else{
 		preferences = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-					   @"Helvetica", @"font", 16.0, @"fontSize", [[NSArray alloc] init], @"recipients", nil];
+					   @"Helvetica", PMKeyFontName, 16.0, PMKeyFontSize, [[NSArray alloc] init], PMKeyPeople, nil];
 		[preferences writeToFile:preferencesFile atomically:YES];
 	}
 	[self loadPeopleFromFile];
+	[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(save:) userInfo:nil repeats:YES];
 	return self;
 }
 
@@ -80,11 +81,11 @@
 		[self savePrefsToFile];
 		[status setStringValue:PMErrorSavingFiles(@"no recipient chosen.")];
 	}
-
 }
 
 - (BOOL)savePrefsToFile {
 	NSLog(@"Preferences saved to %@", preferencesFile);
+	[preferences setObject:peopleArray forKey:PMKeyPeople];
 	return [preferences writeToFile:preferencesFile atomically:YES];
 }
 
@@ -101,9 +102,9 @@
 }
 
 - (void)initFont {
-	currentFontName = [[NSString alloc] initWithString:[preferences objectForKey:@"font"]];
+	currentFontName = [[NSString alloc] initWithString:[preferences objectForKey:PMKeyFontName]];
 	[currentFontName retain];
-	currentFontSize = [[preferences objectForKey:@"fontSize"] floatValue];
+	currentFontSize = [[preferences objectForKey:PMKeyFontSize] floatValue];
 	[self setFont];
 }
 
@@ -120,8 +121,8 @@
 	response.font = newFont;
 	message.font = newFont;
 	NSLog(@"Font set to %@ at size %f", currentFontName, currentFontSize);
-	[preferences setObject:[NSString stringWithFormat:@"%f", currentFontSize] forKey:@"fontSize"];
-	[preferences setObject:[NSString stringWithFormat:@"%@", currentFontName] forKey:@"font"];
+	[preferences setObject:[NSString stringWithFormat:@"%f", currentFontSize] forKey:PMKeyFontSize];
+	[preferences setObject:[NSString stringWithFormat:@"%@", currentFontName] forKey:PMKeyFontName];
 }
 
 - (IBAction)enlargeFont:(id)sender{
@@ -183,7 +184,7 @@
 
 - (void)loadPeopleFromFile {
 	if (preferences != NULL) {
-		peopleArray = [[preferences objectForKey:@"recipients"] mutableCopy];
+		peopleArray = [[preferences objectForKey:PMKeyPeople] mutableCopy];
 	}else{
 		// Bummer. Must be a fresh install or something.
 		NSAlert *chooseAPerson = [[NSAlert alloc] init];

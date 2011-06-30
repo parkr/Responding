@@ -3,7 +3,7 @@
 //  Responding
 //
 //  Created by Parker Moore on 6/28/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Parker Moore. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

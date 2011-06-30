@@ -22,6 +22,10 @@ It's a problem that's in my to-do list. For now, you can use `Enter` (`Opt-Retur
 
 Click on the pop-up button next to "Names". Select "New...", enter the new name and begin! Remember to save!
 
+### Ooh! Ooh! I want to know _all_ you've done so far. Where's the changelog?
+
+[Right here](https://github.com/parkr/Responding/blob/master/CHANGELOG.md)!
+
 ### My question isn't here and I need help!
 
 No problemo. [Email me](mailto:responding@parkermoore.de) and I'll get back to you asap.
