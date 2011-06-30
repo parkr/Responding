@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PMResizableTextField.h"
 
 #define PMInitializedText @"Initialized"
 #define PMInitializedWithNewText @" as a new response."
@@ -21,7 +22,8 @@
 #define PMNoPeopleFoundTitle @"No Respondees"
 #define PMNoPeopleFoundText @"No existing repondees were found."
 #define PMResponseFoundButNoPeopleText @"A message and response pair was found, but no name. Who is it for?"
-#define PMNewPersonText @"To whom are you writing this response?"
+#define PMNewPersonText @"Add a recipient"
+#define PMNewPersonLongText @"To whom are you writing this response?"
 #define PMSelectAPersonText @". Please select a recipient or create a new one to begin."
 #define PMNewPersonCreated @"New recipient created."
 
@@ -36,12 +38,9 @@
 #define PMKeyFontName @"font"
 #define PMKeyFontSize @"fontSize"
 
-#define PMTextFieldHeight 622
-#define PMTextFieldWidth 552
-
 @interface PMMessage : NSObject {
-	IBOutlet NSTextField *message;
-	IBOutlet NSTextField *response;
+	IBOutlet PMResizableTextField *message;
+	IBOutlet PMResizableTextField *response;
 	IBOutlet NSTextField *status;
 	IBOutlet NSPopUpButton *people;
 	IBOutlet NSButton *save;

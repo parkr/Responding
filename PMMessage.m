@@ -14,7 +14,6 @@
 - (id)init {
 	[super init];
 	indexOfCurrentPerson = -1;
-	NSLog(@"%@", peopleArray);
 	NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 	NSString *folderPath = [[libPath stringByAppendingPathComponent:@"Application Support"] stringByAppendingPathComponent:@"Responding"];
 	preferencesFile = [folderPath stringByAppendingPathComponent:@"data.plist"];
@@ -54,6 +53,8 @@
 	if (indexOfCurrentPerson >= 0) {
 		[self loadMessagesFromFiles];
 		[self enableInterface];
+		[message sizeToFit];
+		[response sizeToFit];
 	}else{
 		[status setStringValue:PMConcatenateToString([status stringValue], PMSelectAPersonText)];
 		[self disableInterface];
@@ -147,13 +148,17 @@
 		[accessory setEditable:YES];
 		[accessory setDrawsBackground:NO];
 		
-		NSAlert *chooseAPerson = [[NSAlert alloc] init];
+		NSAlert *chooseAPerson = [NSAlert alertWithMessageText:PMNewPersonText
+												 defaultButton:@"OK" alternateButton:@"Cancel" otherButton:nil
+									 informativeTextWithFormat:PMNewPersonLongText];
 		[chooseAPerson setAlertStyle:NSInformationalAlertStyle];
-		[chooseAPerson setMessageText:PMNewPersonText];
 		[chooseAPerson setAccessoryView:accessory];
 		[chooseAPerson runModal];
 		// GET THAT RESPONSE!!!
 		NSString *person = [accessory stringValue];
+		if ([person isEqualToString:@""]) {
+			return;
+		}
 		[peopleArray addObject:person];
 		indexOfCurrentPerson = [peopleArray indexOfObject:person];
 		[people addItemWithTitle:person];
@@ -207,7 +212,7 @@
 	messageFile = [folderPath stringByAppendingPathComponent:PMMessageTo(PMCurrentPerson)];
 	responseFile = [folderPath stringByAppendingPathComponent:PMResponseTo(PMCurrentPerson)];
 	BOOL yah = YES;
-	NSLog(@"%@\n%@\n%@", folderPath, messageFile, responseFile);
+	NSLog(@"\n%@\n%@", messageFile, responseFile);
 	if ([[NSFileManager defaultManager] fileExistsAtPath:folderPath isDirectory:&yah]) {
 		// Folder exists. Do the files?
 		if ([[NSFileManager defaultManager] fileExistsAtPath:messageFile] && [[NSFileManager defaultManager] fileExistsAtPath:responseFile]) {
@@ -218,6 +223,8 @@
 			responseText = [[NSString alloc] initWithContentsOfFile:responseFile];
 			[message setStringValue:messageText];
 			[response setStringValue:responseText];
+			[message sizeToFit];
+			[response sizeToFit];
 			[status setStringValue:PMConcatenateToString([status stringValue], PMInitializedWithOldText)];
 		}else{
 			// Init with new.

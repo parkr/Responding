@@ -8,9 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
+#define PMBaseHeight 622
+#define PMBaseWidthMessage 528
+#define PMBaseWidthResponse 552
 
 @interface PMTextFieldDelegate : NSObject <NSTextFieldDelegate> {
-
+	IBOutlet NSTextField *message;
+	IBOutlet NSTextField *response;
+	NSSize messageSize;
+	NSSize responseSize;
 }
+
+- (IBAction)changeSizeOfMessage:(id)sender;
+- (IBAction)changeSizeOfResponse:(id)sender;
+- (void)controlTextDidChange:(NSNotification *)aNotification;
 
 @end

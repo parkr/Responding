@@ -1,3 +1,3 @@
 # To-Do
 
-- Add scroll bars to text
+- FIX SCROLLING VIEW GOD DAMMIT

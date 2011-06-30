@@ -10,6 +10,7 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* RespondingAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* RespondingAppDelegate.m */; };
 		6342CFCD13B99EF100E08B70 /* PMMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6342CFCC13B99EF100E08B70 /* PMMessage.m */; };
+		63461E4413BC3F5200A068AF /* PMResizableTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461E4313BC3F5200A068AF /* PMResizableTextField.m */; };
 		63848B6E13BBF66B0053A30F /* PMTextFieldDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63848B6D13BBF66B0053A30F /* PMTextFieldDelegate.m */; };
 		63F514B213BA55B700788F43 /* Responding.icns in Resources */ = {isa = PBXBuildFile; fileRef = 63F514B113BA55B700788F43 /* Responding.icns */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -30,6 +31,8 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		6342CFCB13B99EF100E08B70 /* PMMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMMessage.h; sourceTree = "<group>"; };
 		6342CFCC13B99EF100E08B70 /* PMMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMMessage.m; sourceTree = "<group>"; };
+		63461E4213BC3F5200A068AF /* PMResizableTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMResizableTextField.h; sourceTree = "<group>"; };
+		63461E4313BC3F5200A068AF /* PMResizableTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMResizableTextField.m; sourceTree = "<group>"; };
 		63848B6C13BBF66B0053A30F /* PMTextFieldDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMTextFieldDelegate.h; sourceTree = "<group>"; };
 		63848B6D13BBF66B0053A30F /* PMTextFieldDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTextFieldDelegate.m; sourceTree = "<group>"; };
 		63F514B113BA55B700788F43 /* Responding.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Responding.icns; sourceTree = "<group>"; };
@@ -52,6 +55,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				63461E4213BC3F5200A068AF /* PMResizableTextField.h */,
+				63461E4313BC3F5200A068AF /* PMResizableTextField.m */,
 				256AC3D80F4B6AC300CF3369 /* RespondingAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* RespondingAppDelegate.m */,
 				6342CFCB13B99EF100E08B70 /* PMMessage.h */,
@@ -196,6 +201,7 @@
 				256AC3DA0F4B6AC300CF3369 /* RespondingAppDelegate.m in Sources */,
 				6342CFCD13B99EF100E08B70 /* PMMessage.m in Sources */,
 				63848B6E13BBF66B0053A30F /* PMTextFieldDelegate.m in Sources */,
+				63461E4413BC3F5200A068AF /* PMResizableTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
