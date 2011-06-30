@@ -217,10 +217,11 @@
 		// Folder exists. Do the files?
 		if ([[NSFileManager defaultManager] fileExistsAtPath:messageFile] && [[NSFileManager defaultManager] fileExistsAtPath:responseFile]) {
 			// Load.
+			NSError *error;
 			NSLog(@"They exist!");
 			[people selectItemWithTitle:[peopleArray objectAtIndex:indexOfCurrentPerson]];
-			messageText = [[NSString alloc] initWithContentsOfFile:messageFile];
-			responseText = [[NSString alloc] initWithContentsOfFile:responseFile];
+			messageText = [[NSString alloc] initWithContentsOfFile:messageFile encoding:NSUTF8StringEncoding error:&error];
+			responseText = [[NSString alloc] initWithContentsOfFile:responseFile encoding:NSUTF8StringEncoding error:&error];
 			[message setStringValue:messageText];
 			[response setStringValue:responseText];
 			[message sizeToFit];

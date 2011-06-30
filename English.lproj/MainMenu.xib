@@ -12,8 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="371"/>
 			<integer value="649"/>
-			<integer value="372"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1011,9 +1011,9 @@
 				<string key="NSName">_NSMainMenu</string>
 			</object>
 			<object class="NSWindowTemplate" id="972006081">
-				<int key="NSWindowStyleMask">15</int>
+				<int key="NSWindowStyleMask">7</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{335, 41}, {1136, 709}}</string>
+				<string key="NSWindowRect">{{0, 169}, {1136, 709}}</string>
 				<int key="NSWTFlags">1954021376</int>
 				<string key="NSWindowTitle">Responding</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -1194,7 +1194,7 @@
 						</object>
 						<object class="NSScrollView" id="846433060">
 							<reference key="NSNextResponder" ref="439893737"/>
-							<int key="NSvFlags">12</int>
+							<int key="NSvFlags">30</int>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSClipView" id="745480731">
@@ -1236,6 +1236,7 @@
 									</object>
 									<string key="NSFrame">{{1, 1}, {528, 622}}</string>
 									<reference key="NSSuperview" ref="846433060"/>
+									<reference key="NSNextKeyView" ref="872911216"/>
 									<reference key="NSDocView" ref="872911216"/>
 									<reference key="NSBGColor" ref="131368775"/>
 									<int key="NScvFlags">4</int>
@@ -1263,6 +1264,7 @@
 							</object>
 							<string key="NSFrame">{{19, 46}, {530, 624}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSNextKeyView" ref="745480731"/>
 							<int key="NSsFlags">530</int>
 							<reference key="NSVScroller" ref="446744803"/>
 							<reference key="NSHScroller" ref="549208562"/>
@@ -1271,7 +1273,7 @@
 						</object>
 						<object class="NSScrollView" id="811501945">
 							<reference key="NSNextResponder" ref="439893737"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">286</int>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSClipView" id="1004949824">
@@ -1301,6 +1303,7 @@
 									</object>
 									<string key="NSFrame">{{1, 1}, {552, 622}}</string>
 									<reference key="NSSuperview" ref="811501945"/>
+									<reference key="NSNextKeyView" ref="648447522"/>
 									<reference key="NSDocView" ref="648447522"/>
 									<reference key="NSBGColor" ref="131368775"/>
 									<int key="NScvFlags">4</int>
@@ -1328,6 +1331,7 @@
 							</object>
 							<string key="NSFrame">{{562, 46}, {554, 624}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSNextKeyView" ref="1004949824"/>
 							<int key="NSsFlags">530</int>
 							<reference key="NSVScroller" ref="683566360"/>
 							<reference key="NSHScroller" ref="499356162"/>
@@ -1337,7 +1341,7 @@
 					<string key="NSFrameSize">{1136, 709}</string>
 					<reference key="NSSuperview"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 			<object class="NSCustomObject" id="976324537">
@@ -3375,9 +3379,9 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{304, 147}, {1136, 709}}</string>
+					<string>{{105, 147}, {1136, 709}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{304, 147}, {1136, 709}}</string>
+					<string>{{105, 147}, {1136, 709}}</string>
 					<integer value="1"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>

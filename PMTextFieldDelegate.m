@@ -86,6 +86,7 @@
 }
 
 - (void)controlTextDidEndEditing:(NSNotification *)aNotification {
+	NSLog(@"controlTextDidEndEditing: has been called.");
 	[[aNotification object] sizeToFit];
 }
 

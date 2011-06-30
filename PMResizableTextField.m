@@ -33,7 +33,7 @@
 
 - (void)sizeToFit {
 	NSRect frame = [self frame];
-	frame.size.height = [self contentSize].height;
+	frame.size.height = [self contentSize].height+10;
 	NSLog(@"frame.size.height = %f ||| String is empty: %d", frame.size.height, [[self stringValue] isEqualToString:@""] == TRUE);
 	if (frame.size.height < PMBaseHeight) {
 		frame.size.height = PMBaseHeight;
@@ -47,12 +47,15 @@
 		[self setFrame:baseFrame];
 		return;
 	}
+	NSLog(@"Text changed.");
 	[self sizeToFit];
 }
 
 - (NSSize)contentSize {
 	NSTextView *textView = (NSTextView*)[[self window] fieldEditor:YES forObject:self];
-	return [[textView layoutManager] usedRectForTextContainer:[textView textContainer]].size;
+	NSSize contentSize = [[textView layoutManager] usedRectForTextContainer:[textView textContainer]].size;
+	NSLog(@"height: %f", contentSize.height);
+	return contentSize;
 }
 
 @end
