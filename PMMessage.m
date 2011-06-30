@@ -3,7 +3,7 @@
 //  Responding
 //
 //  Created by Parker Moore on 6/28/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Parker Moore. All rights reserved.
 //
 
 #import "PMMessage.h"
@@ -14,8 +14,21 @@
 - (id)init {
 	[super init];
 	indexOfCurrentPerson = -1;
-	[self loadPeopleFromFiles];
+	[self loadPeopleFromFile];
 	NSLog(@"%@", peopleArray);
+	NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+	NSString *folderPath = [[libPath stringByAppendingPathComponent:@"Application Support"] stringByAppendingPathComponent:@"Responding"];
+	preferencesFile = [folderPath stringByAppendingPathComponent:@"data.plist"];
+	[preferencesFile retain];
+	if([[NSFileManager defaultManager] fileExistsAtPath:preferencesFile]){
+		NSLog(@"Found prefs: %@", preferencesFile);
+		preferences = [[NSMutableDictionary alloc] initWithContentsOfFile:preferencesFile];
+		NSLog(@"%@", preferences);
+	}else{
+		preferences = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+					   @"Helvetica", @"font", 16.0, @"fontSize", [[NSArray alloc] init], @"recipients", nil];
+		[preferences writeToFile:preferencesFile atomically:YES];
+	}
 	return self;
 }
 
@@ -35,8 +48,6 @@
 
 - (void)awakeFromNib {
 	NSLog(@"Awoken!");
-	[status setStringValue:PMInitializedText];
-	[self setFont:PMHelveticaFont];
 	[people addItemsWithTitles:peopleArray];
 	if (indexOfCurrentPerson >= 0) {
 		[self loadMessagesFromFiles];
@@ -45,27 +56,34 @@
 		[status setStringValue:PMConcatenateToString([status stringValue], PMSelectAPersonText)];
 		[self disableInterface];
 	}
+	[self initFont];
 }
 
 - (IBAction)save:(id)sender {
-	[status setStringValue:PMSavingText];
-	// Get text and put in buffer.
-	messageText = [message stringValue];
-	responseText = [response stringValue];
-	NSLog(@"%@, %@", messageFile, responseFile);
-	// Write to text files.
-	NSError *error;
-	if(![messageText writeToFile:messageFile atomically:YES encoding:NSUTF8StringEncoding error:&error] || ![responseText writeToFile:responseFile atomically:YES encoding:NSUTF8StringEncoding error:&error] || ![self savePeopleToFile]){
-		NSLog(@"We have a problem: %@", [error localizedFailureReason]);
-		[status setStringValue:PMErrorSavingFiles([error localizedFailureReason])];
-	}else{
-		NSLog(@"Saved!");
-		[status setStringValue:PMSavedText];
+	if (indexOfCurrentPerson != -1) {
+		[status setStringValue:PMSavingText];
+		// Get text and put in buffer.
+		messageText = [message stringValue];
+		responseText = [response stringValue];
+		NSLog(@"%@, %@", messageFile, responseFile);
+		// Write to text files.
+		NSError *error;
+		if(![messageText writeToFile:messageFile atomically:YES encoding:NSUTF8StringEncoding error:&error] || ![responseText writeToFile:responseFile atomically:YES encoding:NSUTF8StringEncoding error:&error] || ![self savePrefsToFile]){
+			NSLog(@"We have a problem: %@", [error localizedFailureReason]);
+			[status setStringValue:PMErrorSavingFiles([error localizedFailureReason])];
+		}else{
+			NSLog(@"Saved!");
+			[status setStringValue:PMSavedText];
+		}
+	}else {
+		[status setStringValue:PMErrorSavingFiles(@"no recipient chosen.")];
 	}
+
 }
 
-- (BOOL)savePeopleToFile {
-	return [peopleArray writeToFile:peopleFile atomically:YES];
+- (BOOL)savePrefsToFile {
+	NSLog(@"%@", preferencesFile);
+	return [preferences writeToFile:preferencesFile atomically:YES];
 }
 
 - (IBAction)copyResponseToClipboard:(id)sender {
@@ -80,13 +98,39 @@
 	}
 }
 
-- (IBAction)chooseFont:(id)sender{
-	
+- (void)initFont {
+	currentFontName = [[NSString alloc] initWithString:[preferences objectForKey:@"font"]];
+	[currentFontName retain];
+	currentFontSize = [[preferences objectForKey:@"fontSize"] floatValue];
+	[self setFont];
 }
 
-- (void)setFont:(NSFont *)aFont{
-	response.font = aFont;
-	message.font = aFont;
+- (IBAction)chooseFont:(id)sender{
+	NSLog(@"%@", [sender title]);
+	[currentFontName release];
+	currentFontName = [[NSString alloc] initWithString:[sender title]];
+	[currentFontName retain];
+	[self setFont];
+}
+
+- (void)setFont {
+	NSFont *newFont = [NSFont fontWithName:currentFontName size:currentFontSize];
+	response.font = newFont;
+	message.font = newFont;
+	NSLog(@"Font set to %@ at size %f", currentFontName, currentFontSize);
+	[preferences setObject:[NSString stringWithFormat:@"%f", currentFontSize] forKey:@"fontSize"];
+	[preferences setObject:[NSString stringWithFormat:@"%@", currentFontName] forKey:@"font"];
+	NSLog(@"%@", preferences);
+}
+
+- (IBAction)enlargeFont:(id)sender{
+	currentFontSize += 1.0;
+	[self setFont];
+}
+
+- (IBAction)shrinkFont:(id)sender{
+	 currentFontSize -= 1.0;
+	 [self setFont];
 }
 
 - (IBAction)changePerson:(id)sender{
@@ -123,20 +167,20 @@
 		[status setStringValue:PMNewPersonCreated];
 		[message setStringValue:@""];
 		[response setStringValue:@""];
-		[self savePeopleToFile];
+		[self savePrefsToFile];
 		[self enableInterface];
 	}else{
 		NSLog(@"Changing to '%@'", tempPerson);
 		// Load the messages!
 		indexOfCurrentPerson = [peopleArray indexOfObject:tempPerson];
-		NSLog(@"%d", indexOfCurrentPerson);
+		NSLog(@"Index of current person: %d", indexOfCurrentPerson);
 		[status setStringValue:PMInitializedText];
 		[self loadMessagesFromFiles];
 		[self enableInterface];
 	}
 }
 
-- (void)loadPeopleFromFiles {
+- (void)loadPeopleFromFile {
 	NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 	NSString *folderPath = [[libPath stringByAppendingPathComponent:@"Application Support"] stringByAppendingPathComponent:@"Responding"];
 	peopleFile = [folderPath stringByAppendingPathComponent:@"people.plist"];
@@ -229,6 +273,8 @@
 			// Init with new.
 			messageText = [[NSString alloc] init];
 			responseText = [[NSString alloc] init];
+			[message setStringValue:@""];
+			[response setStringValue:@""];
 			[status setStringValue:PMConcatenateToString([status stringValue], PMInitializedWithNewText)];
 		}
 	}else{
@@ -242,17 +288,21 @@
 			// Create files.
 			messageText = [[NSString alloc] init];
 			responseText = [[NSString alloc] init];
+			[message setStringValue:@""];
+			[response setStringValue:@""];
 			[status setStringValue:PMConcatenateToString([status stringValue], PMInitializedWithNewText)];
 		}
 	}
 	[messageFile retain];
 	[responseFile retain];
-	[self savePeopleToFile];
+	[self savePrefsToFile];
 }
 
 - (void)dealloc {
 	[messageFile release];
 	[responseFile release];
+	[preferencesFile release];
+	[currentFontName release];
 	[super dealloc];
 }
 
