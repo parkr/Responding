@@ -28,17 +28,17 @@ Click on the pop-up button next to "Names". Select "New...", enter the new name 
 
 ### My question isn't here and I need help!
 
-No problemo. [Email me](mailto:responding@parkermoore.de) and I'll get back to you asap.
+No problemo. Email me and I'll get back to you asap.
 
 ## Screenshots
 
 ### The application window: 
 
-![What it looks like.](http://parkermoore.de/projects/RespondingApp/images/screenshot.png)
+![What it looks like.](https://raw.github.com/parkr/Responding/gh-pages/images/screenshot.png)
 
 ### Selecting a new recipient:
 
-![Selecting a new Recipient](http://parkermoore.de/projects/RespondingApp/images/selecting_new_person.png)
+![Selecting a new Recipient](https://raw.github.com/parkr/Responding/gh-pages/images/selecting_new_person.png)
 
 ## Download
 [Go for it.](http://parkermoore.de/projects/RespondingApp/Responding.app.zip)
