@@ -23,8 +23,10 @@
 		preferences = [[NSMutableDictionary alloc] initWithContentsOfFile:preferencesFile];
 		NSLog(@"%@", preferences);
 	}else{
-		preferences = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-					   @"Helvetica", PMKeyFontName, 16.0, PMKeyFontSize, [[NSArray alloc] init], PMKeyPeople, nil];
+        preferences = [[NSMutableDictionary alloc] initWithCapacity:3];
+        [preferences setValue:@"Helvetica" forKey:PMKeyFontName];
+        [preferences setValue:@"16" forKey:PMKeyFontSize];
+        [preferences setValue:[[NSMutableArray alloc] init] forKey:PMKeyPeople];
 		[preferences writeToFile:preferencesFile atomically:YES];
 	}
 	[self loadPeopleFromFile];
