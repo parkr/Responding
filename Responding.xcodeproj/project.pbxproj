@@ -241,6 +241,7 @@
 				INFOPLIST_FILE = "Responding-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Responding;
+				SDKROOT = macosx10.8;
 			};
 			name = Debug;
 		};
@@ -255,6 +256,7 @@
 				INFOPLIST_FILE = "Responding-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Responding;
+				SDKROOT = macosx10.8;
 			};
 			name = Release;
 		};
@@ -266,6 +268,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
@@ -279,6 +282,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
