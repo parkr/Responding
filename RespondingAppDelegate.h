@@ -14,6 +14,7 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
+- (BOOL)findOrCreateApplicationSupportDirectory;
 - (IBAction)openHelpPage:(id)sender;
 
 @end
