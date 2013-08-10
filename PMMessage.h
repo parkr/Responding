@@ -62,6 +62,7 @@
 - (void)disableInterface;
 
 - (IBAction)save:(id)sender;
+- (NSString *)filenameForName:(NSString *)name;
 - (BOOL)savePrefsToFile;
 - (IBAction)copyResponseToClipboard:(id)sender;
 

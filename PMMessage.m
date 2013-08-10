@@ -86,6 +86,10 @@
 	}
 }
 
+- (NSString *)filenameForName:(NSString *)name {
+    return [[name lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+}
+
 - (BOOL)savePrefsToFile {
 	NSLog(@"Preferences saved to %@", preferencesFile);
 	[preferences setObject:peopleArray forKey:PMKeyPeople];
@@ -167,8 +171,8 @@
 		[people selectItemWithTitle:person];
 		NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 		NSString *folderPath = [[libPath stringByAppendingPathComponent:@"Application Support"] stringByAppendingPathComponent:@"Responding"];
-		messageFile = [folderPath stringByAppendingPathComponent:PMMessageTo(PMCurrentPerson)];
-		responseFile = [folderPath stringByAppendingPathComponent:PMResponseTo(PMCurrentPerson)];
+		messageFile = [folderPath stringByAppendingPathComponent:PMMessageTo([self filenameForName:PMCurrentPerson])];
+		responseFile = [folderPath stringByAppendingPathComponent:PMResponseTo([self filenameForName:PMCurrentPerson])];
 		NSLog(@"Recipient added '%@' at index %d", person, indexOfCurrentPerson);
 		NSLog(@"%@, %@", messageFile, responseFile);
 		[messageFile retain];
@@ -211,8 +215,8 @@
 	// Do they exist?
 	NSString *libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 	NSString *folderPath = [[libPath stringByAppendingPathComponent:@"Application Support"] stringByAppendingPathComponent:@"Responding"];
-	messageFile = [folderPath stringByAppendingPathComponent:PMMessageTo(PMCurrentPerson)];
-	responseFile = [folderPath stringByAppendingPathComponent:PMResponseTo(PMCurrentPerson)];
+	messageFile = [folderPath stringByAppendingPathComponent:PMMessageTo([self filenameForName:PMCurrentPerson])];
+	responseFile = [folderPath stringByAppendingPathComponent:PMResponseTo([self filenameForName:PMCurrentPerson])];
 	BOOL yah = YES;
 	NSLog(@"\n%@\n%@", messageFile, responseFile);
 	if ([[NSFileManager defaultManager] fileExistsAtPath:folderPath isDirectory:&yah]) {
