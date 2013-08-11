@@ -16,19 +16,21 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.3</string>
 	<key>CFBundleSignature</key>
 	<string>rspd</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.2</string>
+	<key>CFBundleVersion</key>
+	<string>1.3</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
-	<key>CFBundleVersion</key>
-	<string>1.2</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright 2013 Parker Moore</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2011 Parker Moore</string>
 </dict>
 </plist>

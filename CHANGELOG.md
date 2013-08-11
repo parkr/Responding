@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.3
+
+- **Fix launch SEGFAULT on OS X 10.8**
+- **Create Application Support directory if not there**
+- **Create safe filenames for message files**
+- **Add Makefile for easy building for release**
+
 ## v1.2
 - **Added scroll bars to the text fields, though not perfect**
 - **Auto-Saves every 60 seconds so you never lose any work**
